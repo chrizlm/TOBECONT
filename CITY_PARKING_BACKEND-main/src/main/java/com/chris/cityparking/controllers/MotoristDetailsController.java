@@ -2,6 +2,7 @@ package com.chris.cityparking.controllers;
 
 import com.chris.cityparking.modules.MotoristDetails;
 import com.chris.cityparking.services.MotoristDetailService;
+import com.chris.cityparking.services.MotoristDetailServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class MotoristDetailsController {
     }
 
     @GetMapping("/getDetails/{motoristID}")
-    public ResponseEntity<MotoristDetails> getMotorist(@PathVariable Long motoristID){
+    public ResponseEntity<List<MotoristDetails>> getMotorist(@PathVariable Long motoristID){
         return new ResponseEntity<>(motoristDetailService.getMotorist(motoristID), HttpStatus.OK);
     }
 

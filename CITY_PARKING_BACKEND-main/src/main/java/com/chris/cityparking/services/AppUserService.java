@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface AppUserService {
-    Map<String, String> userLogin(LogInForm logInForm);
+    String userLogin(LogInForm logInForm);
     AppUser saveAppUser(AppUser appUser);
     Role saveRole(Role role);
     void addRoleToUser(String username, String roleName);

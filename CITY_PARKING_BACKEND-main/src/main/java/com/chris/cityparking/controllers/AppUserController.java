@@ -46,7 +46,7 @@ public class AppUserController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> authenticateUser(@Valid @RequestBody LogInForm logInForm) {
+    public ResponseEntity<String> authenticateUser(@Valid @RequestBody LogInForm logInForm) {
         return ResponseEntity.ok().body(appUserService.userLogin(logInForm));
     }
 

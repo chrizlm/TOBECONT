@@ -25,7 +25,7 @@ public class ParkingDetailsController {
     }
 
     @GetMapping("/get/{numberPlate}")
-    public ResponseEntity<ParkingDetails> getParkingDetails(@PathVariable String numberPlate){
+    public ResponseEntity<List<ParkingDetails>> getParkingDetails(@PathVariable String numberPlate){
         return new ResponseEntity<>(parkingDetailService.getParkingDetail(numberPlate), HttpStatus.OK);
     }
 

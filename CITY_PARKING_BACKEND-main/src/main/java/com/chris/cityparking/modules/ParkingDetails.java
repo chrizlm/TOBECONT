@@ -36,4 +36,5 @@ public class ParkingDetails {
     @JsonBackReference
     private ParkingLot parkingLot;
 
+
 }

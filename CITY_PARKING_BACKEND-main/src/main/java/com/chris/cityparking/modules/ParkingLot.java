@@ -4,6 +4,10 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 
@@ -27,6 +31,16 @@ public class ParkingLot {
     @OneToMany(mappedBy = "parkingLot", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<ParkingDetails> parkingDetails;
+
+    private int availableSpace;
+
+    @Temporal(TemporalType.DATE)
+    private Date parkingLotDate;
+   /*
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<BookingDates> bookingDates = new ArrayList<>();
+
+    */
 
 
 

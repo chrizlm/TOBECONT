@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface ParkingDetailsRepo extends JpaRepository<ParkingDetails, Long> {
 
     Optional<ParkingDetails> findByNumberPlate(String numberPlate);
-    ParkingDetails getByNumberPlate(String numberPlate);
+    List<ParkingDetails> getByNumberPlate(String numberPlate);
     void deleteByNumberPlate(String numberPlate);
     List<ParkingDetails> getByParkingLotName(String ParkingLotName);
 

@@ -92,7 +92,7 @@ public class AppUserServiceImplementation implements AppUserService, UserDetails
         return appUserRepo.findAll();
     }
 
-
+/*
     @Override
     public Map<String, String> userLogin(LogInForm logInForm) {
         String username = logInForm.getUsername();
@@ -117,7 +117,7 @@ public class AppUserServiceImplementation implements AppUserService, UserDetails
 
         Map<String, String> tokens = new HashMap<>();
         tokens.put("access_token", access_token);
-        tokens.put("refresh_token", refresh_token);
+        //tokens.put("refresh_token", refresh_token);
         return tokens;
        /*
 
@@ -142,8 +142,35 @@ public class AppUserServiceImplementation implements AppUserService, UserDetails
         tokens.put("refresh_token", refresh_token);
         response.setContentType(APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(), tokens);
-        */
 
+
+    }
+    */
+
+    @Override
+    public String userLogin(LogInForm logInForm) {
+        String username = logInForm.getUsername();
+        String password = logInForm.getPassword();
+
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+        //return authenticationManager.authenticate(authenticationToken);
+
+        Authentication authentication = authenticationManager.authenticate(authenticationToken);
+        User user = (User) authentication.getPrincipal();
+        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+        String access_token = JWT.create()
+                .withSubject(user.getUsername())
+                .withExpiresAt(new Date(System.currentTimeMillis() + 10*60*1000))
+                .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+                .sign(algorithm);
+        String refresh_token = JWT.create()
+                .withSubject(user.getUsername())
+                .withExpiresAt(new Date(System.currentTimeMillis() + 30*60*1000))
+                .sign(algorithm);
+
+
+       String tokens = access_token;
+        return tokens;
     }
 
 
