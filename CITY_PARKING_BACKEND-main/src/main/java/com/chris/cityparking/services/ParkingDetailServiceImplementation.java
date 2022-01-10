@@ -3,7 +3,9 @@ package com.chris.cityparking.services;
 import com.chris.cityparking.exceptions.ParkingDetailsNotFoundException;
 import com.chris.cityparking.modules.ParkingDetails;
 import com.chris.cityparking.modules.ParkingLot;
+import com.chris.cityparking.modules.ParkingLotAndDates;
 import com.chris.cityparking.repositories.ParkingDetailsRepo;
+import com.chris.cityparking.repositories.ParkingLotAndDatesRepo;
 import com.chris.cityparking.repositories.ParkingLotRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +31,10 @@ public class ParkingDetailServiceImplementation implements ParkingDetailService{
     ParkingLotRepo parkingLotRepo;
     @Autowired
     BookingService bookingService;
+    @Autowired
+    ParkingLotAndDateService parkingLotAndDateService;
+    @Autowired
+    ParkingLotAndDatesRepo parkingLotAndDatesRepo;
 
     /*
     getting details
@@ -38,22 +44,51 @@ public class ParkingDetailServiceImplementation implements ParkingDetailService{
      */
 
     @Override
+    public Integer getAvailableSpaceForBooking(ParkingDetails parkingDetails){
+        return parkingLotAndDateService.getAvailableSpaces(parkingDetails);
+    }
+
+    
+
+    @Override
+    public String saveParkingDetail(ParkingDetails parkingDetails){
+        int availableSpaces = parkingLotAndDateService.getAvailableSpaces(parkingDetails);
+        int totalSpaces = parkingLotAndDateService.getTotalSpaces(parkingDetails);
+        if(availableSpaces >= 0 || availableSpaces <= totalSpaces ){
+            ParkingLotAndDates parkingLotAndDates = parkingLotAndDateService.getAParking(parkingDetails);
+            bookingService.updateFreeSpacesWithDates(parkingDetails);
+            parkingDetails.setParkingLotAndDates(parkingLotAndDates);
+            parkingDetailsRepo.save(parkingDetails);
+            return "Successful booked";
+        }else {
+            return "failed booking";
+        }
+
+    }
+
+
+/*
+
+    @Override
     public void createParkingDetail(ParkingDetails parkingDetails){
 
-        /*
-        an if statement to be added
-        check if the carrent capacity of parking lot is full
-        if free space available save else find another
-         */
+
+        //an if statement to be added
+        //check if the carrent capacity of parking lot is full
+        //if free space available save else find another
+
         ParkingLot parkingLot = parkingLotRepo.getByParkingLotName(parkingDetails.getParkingLotName());
         //pass date from details
         //LocalDate selectedDate = (parkingDetails.getParkingDate()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         Date selectedDate = parkingDetails.getParkingDate();
         bookingService.updateFreeSpace(parkingLot, selectedDate);
         //bookingService.updateFreeSpace(parkingLot);
-        parkingDetails.setParkingLot(parkingLot);
+        //parkingDetails.setParkingLot(parkingLot);
         parkingDetailsRepo.save(parkingDetails);
     }
+    */
+
+
 
     @Override
     public List<ParkingDetails> getParkingDetail(String numberPlate){
@@ -64,7 +99,7 @@ public class ParkingDetailServiceImplementation implements ParkingDetailService{
     public List<ParkingDetails> getAllParkingDetails(){
         return parkingDetailsRepo.findAll();
     }
-
+/*
     @Override
     public void updateParkingDetail(ParkingDetails parkingDetails){
         parkingDetailsRepo.findByNumberPlate(parkingDetails.getNumberPlate()).ifPresentOrElse(parking ->{
@@ -74,12 +109,14 @@ public class ParkingDetailServiceImplementation implements ParkingDetailService{
             parking.setParkTime(parkingDetails.getParkTime());
             parking.setParkingDate(parkingDetails.getParkingDate());
             parking.setParkDuration(parkingDetails.getParkDuration());
-            parking.setParkingLot(parkingLotRepo.getByParkingLotName(parkingDetails.getParkingLotName()));
+            //parking.setParkingLot(parkingLotRepo.getByParkingLotName(parkingDetails.getParkingLotName()));
             parkingDetailsRepo.save(parking);
         }, ()->{
             throw new ParkingDetailsNotFoundException(parkingDetails.getNumberPlate());
         });
     }
+
+ */
 
     @Override
     public void deleteParkingDetails(String numberPlate){

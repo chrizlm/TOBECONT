@@ -16,4 +16,6 @@ public interface BookingService {
     List<ParkingDetails> getAllParkingDetailsInAParkingLot(String parkingLotName);
     Set<String> getAreas();
     List<String> getParkings(String locationName);
+    void updateFreeSpacesWithDates(ParkingDetails parkingDetails);
+    int getBookedSpaces(ParkingDetails parkingDetails);
 }

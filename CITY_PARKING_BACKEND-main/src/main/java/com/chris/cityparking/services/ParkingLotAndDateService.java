@@ -1,6 +1,7 @@
 package com.chris.cityparking.services;
 
 import com.chris.cityparking.modules.BookingDates;
+import com.chris.cityparking.modules.ParkingDetails;
 import com.chris.cityparking.modules.ParkingLotAndDates;
 
 import java.util.Date;
@@ -13,4 +14,10 @@ public interface ParkingLotAndDateService {
     List<ParkingLotAndDates> getParkingLotAndDates(String parkingLotName);
     List<ParkingLotAndDates> getListByDates(Date date);
     List<ParkingLotAndDates> getAllParkingLotAndDates();
+    List<ParkingLotAndDates> getListByLocation(String Location);
+    Integer getAvailableSpaces(ParkingDetails parkingDetails);
+    ParkingLotAndDates getAParking(ParkingDetails parkingDetails);
+    List<ParkingLotAndDates> getParkings(ParkingDetails parkingDetails);
+    int getTotalSpaces(ParkingDetails parkingDetails);
+    ParkingLotAndDates getAParkingTwo(ParkingDetails parkingDetails);
 }

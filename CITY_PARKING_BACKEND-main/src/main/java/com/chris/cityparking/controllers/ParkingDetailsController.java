@@ -18,10 +18,17 @@ public class ParkingDetailsController {
     @Autowired
     ParkingDetailService parkingDetailService;
 
+    @PostMapping("/checkSpace")
+    public ResponseEntity<Integer> getSpacesForBooking(@RequestBody ParkingDetails parkingDetails){
+        return new ResponseEntity<>(parkingDetailService.getAvailableSpaceForBooking(parkingDetails), HttpStatus.OK);
+    }
+
     @PostMapping("/save")
-    public ResponseEntity<ParkingDetails> createParkingDetail(@RequestBody ParkingDetails parkingDetails){
-        parkingDetailService.createParkingDetail(parkingDetails);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<String> createParkingDetail(@RequestBody ParkingDetails parkingDetails){
+        //parkingDetailService.createParkingDetail(parkingDetails);
+        //return new ResponseEntity<>(HttpStatus.CREATED);
+
+        return new ResponseEntity<>(parkingDetailService.saveParkingDetail(parkingDetails), HttpStatus.CREATED);
     }
 
     @GetMapping("/get/{numberPlate}")
@@ -34,11 +41,14 @@ public class ParkingDetailsController {
         return new ResponseEntity<>(parkingDetailService.getAllParkingDetails(), HttpStatus.OK);
     }
 
+    /*
     @PutMapping("/update")
     public ResponseEntity<?> updateParkingDetail(@RequestBody ParkingDetails parkingDetails){
         parkingDetailService.updateParkingDetail(parkingDetails);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+     */
 
     @DeleteMapping("/{numberPlate}")
     public ResponseEntity<?> deleteParkingDetail(@PathVariable String numberPlate){

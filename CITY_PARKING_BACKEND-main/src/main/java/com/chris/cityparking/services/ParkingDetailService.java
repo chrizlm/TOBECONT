@@ -5,10 +5,12 @@ import com.chris.cityparking.modules.ParkingDetails;
 import java.util.List;
 
 public interface ParkingDetailService {
-    void createParkingDetail(ParkingDetails parkingDetails);
+    //void createParkingDetail(ParkingDetails parkingDetails);
     List<ParkingDetails> getParkingDetail(String numberPlate);
     List<ParkingDetails> getAllParkingDetails();
-    void updateParkingDetail(ParkingDetails parkingDetails);
+    Integer getAvailableSpaceForBooking(ParkingDetails parkingDetails);
+    //void updateParkingDetail(ParkingDetails parkingDetails);
     void deleteParkingDetails(String numberPlate);
     void deleteAllParkingDetails();
+    String saveParkingDetail(ParkingDetails parkingDetails);
 }

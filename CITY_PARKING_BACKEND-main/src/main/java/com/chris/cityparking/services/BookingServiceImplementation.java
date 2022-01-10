@@ -38,6 +38,9 @@ public class BookingServiceImplementation implements BookingService{
     @Autowired
     ParkingLotAndDatesRepo parkingLotAndDatesRepo;
 
+    @Autowired
+    ParkingLotAndDateService parkingLotAndDateService;
+
 
     /*
     //get capacity of a parking lot
@@ -59,6 +62,12 @@ public class BookingServiceImplementation implements BookingService{
     @Override
     public int getOccupiedSpaces(String parkingLotName){
         return parkingDetailsRepo.getByParkingLotName(parkingLotName).size();
+    }
+
+    @Override
+    public int getBookedSpaces(ParkingDetails parkingDetails){
+        List<ParkingDetails> booked = parkingDetailsRepo.getByParkingLotNameAndLocationAndParkingDate(parkingDetails);
+        return booked.size();
     }
 
 
@@ -86,6 +95,18 @@ public class BookingServiceImplementation implements BookingService{
         int occupiedCapacity = getOccupiedSpaces(parkingLotName);
         int freeSpaces = (totalCapacity - occupiedCapacity);
         parkingLotAndDates.setAvailableSpace(freeSpaces);
+    }
+
+    @Override
+    public void updateFreeSpacesWithDates(ParkingDetails parkingDetails){
+        ParkingLotAndDates parkingLotAndDates = parkingLotAndDateService.getAParking(parkingDetails);
+        int totalCapacity = parkingLotAndDates.getTotalCapacity();
+        int occupiedCapacity = getBookedSpaces(parkingDetails);
+        if(occupiedCapacity < totalCapacity) {
+            int freeSpaces = ((totalCapacity - 1) - occupiedCapacity);
+            parkingLotAndDates.setAvailableSpace(freeSpaces);
+            parkingLotAndDatesRepo.save(parkingLotAndDates);
+        }
     }
 
     @Override

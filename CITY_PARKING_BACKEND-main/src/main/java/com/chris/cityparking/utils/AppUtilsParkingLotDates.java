@@ -21,6 +21,7 @@ public class AppUtilsParkingLotDates {
         parkingLotAndDates.setParkingRegNo(parkingLot.getParkingRegNo());
         parkingLotAndDates.setTotalCapacity(parkingLot.getTotalParkingSpaces());
         //parkingLotAndDates.setAvailableSpace(parkingLot.getTotalParkingSpaces());
+        parkingLotAndDates.setParkingLotLocation(parkingLot.getParkingLotLocation());
         parkingLotAndDates.setDate(parkingLot.getParkingLotDate());
 
         parkingLotAndDateService.saveParkLotAndDate(parkingLotAndDates);

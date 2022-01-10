@@ -1,6 +1,7 @@
 package com.chris.cityparking.services;
 
 import com.chris.cityparking.modules.BookingDates;
+import com.chris.cityparking.modules.ParkingDetails;
 import com.chris.cityparking.modules.ParkingLotAndDates;
 import com.chris.cityparking.repositories.BookingDateRepo;
 import com.chris.cityparking.repositories.ParkingLotAndDatesRepo;
@@ -57,6 +58,56 @@ public class ParkingLotAndDatesServiceImlementation implements ParkingLotAndDate
         log.info("fetch list by date {}", date);
         return parkingLotAndDatesRepo.getByDate(date);
     }
+
+    @Override
+    public List<ParkingLotAndDates> getListByLocation(String location) {
+        log.info("fetch list by location {}", location);
+        return parkingLotAndDatesRepo.getByParkingLotLocation(location);
+    }
+
+    @Override
+    public List<ParkingLotAndDates> getParkings(ParkingDetails parkingDetails){
+        return parkingLotAndDatesRepo.getByParkingLotLocationAndParkingLotNameAndDate(
+                parkingDetails.getLocation(),
+                parkingDetails.getParkingLotName(),
+                parkingDetails.getParkingDate()
+        );
+    }
+
+    @Override
+    public ParkingLotAndDates getAParking(ParkingDetails parkingDetails){
+      /*  return parkingLotAndDatesRepo.getByParkingLotLocationAndParkingLotNameAndDateOne(
+                parkingDetails.getLocation(),
+                parkingDetails.getParkingLotName(),
+                parkingDetails.getParkingDate()
+        );
+
+       */
+        return parkingLotAndDatesRepo.getByParkingLotLocationAndParkingLotNameAndDateTwo(parkingDetails);
+
+    }
+
+    @Override
+    public ParkingLotAndDates getAParkingTwo(ParkingDetails parkingDetails){
+        return parkingLotAndDatesRepo.getByParkingLotLocationAndParkingLotNameAndDateTwo(parkingDetails);
+    }
+
+    @Override
+    public Integer getAvailableSpaces(ParkingDetails parkingDetails) {
+        log.info("getting the available spaces");
+        ParkingLotAndDates parkingLotAndDates = getAParking(parkingDetails);
+        return parkingLotAndDates.getAvailableSpace();
+    }
+
+    @Override
+    public int getTotalSpaces(ParkingDetails parkingDetails) {
+        log.info("getting the total spaces");
+        ParkingLotAndDates parkingLotAndDates = getAParking(parkingDetails);
+        return parkingLotAndDates.getTotalCapacity();
+    }
+
+
+
 
     @Override
     public List<ParkingLotAndDates> getAllParkingLotAndDates() {

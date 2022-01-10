@@ -1,6 +1,7 @@
 package com.chris.cityparking.controllers;
 
 import com.chris.cityparking.modules.BookingDates;
+import com.chris.cityparking.modules.ParkingDetails;
 import com.chris.cityparking.modules.ParkingLotAndDates;
 import com.chris.cityparking.services.ParkingLotAndDateService;
 import lombok.Data;
@@ -39,11 +40,30 @@ public class ParkingLotAndDateController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/getByLocation/{location}")
+    public ResponseEntity<List<ParkingLotAndDates>> getParkingLotByLocation(@PathVariable String location){
+        return new ResponseEntity<>(parkingLotAndDateService.getListByLocation(location), HttpStatus.OK);
+    }
+
     @GetMapping("/get/{date}")
     public ResponseEntity<List<ParkingLotAndDates>> getParkingLotByDates(@PathVariable Date date){
         return new ResponseEntity<>(parkingLotAndDateService.getListByDates(date), HttpStatus.OK);
     }
+    @GetMapping("/")
+    public ResponseEntity<ParkingLotAndDates> getAPK(@RequestBody ParkingDetails parkingDetails){
+        return new ResponseEntity<>(parkingLotAndDateService.getAParking(parkingDetails), HttpStatus.OK);
+    }
 
+    @GetMapping("/two")
+    public ResponseEntity<ParkingLotAndDates> getAPKtwo(@RequestBody ParkingDetails parkingDetails){
+        return new ResponseEntity<>(parkingLotAndDateService.getAParkingTwo(parkingDetails), HttpStatus.OK);
+    }
+/*
+    @GetMapping("/get/spaces")
+    public ResponseEntity<List<ParkingLotAndDates>> getParkingLotByDates(@RequestBody ParkingDetails parkingDetails){
+        return new ResponseEntity<>(parkingLotAndDateService.getListByDates(date), HttpStatus.OK);
+    }
+*/
     @GetMapping("/all")
     public ResponseEntity<List<ParkingLotAndDates>> getAllParkingAndDates(){
         return new ResponseEntity<>(parkingLotAndDateService.getAllParkingLotAndDates(), HttpStatus.OK);
@@ -52,6 +72,13 @@ public class ParkingLotAndDateController {
 
 @Data
 class DateToParkLotForm{
+    private String parkingLotName;
+    private Date date;
+}
+
+@Data
+class FindSpaceForm{
+    private String parkingLotLocation;
     private String parkingLotName;
     private Date date;
 }
