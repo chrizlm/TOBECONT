@@ -28,7 +28,7 @@ public class ParkingLotAndDatesServiceImlementation implements ParkingLotAndDate
 
     @Override
     public ParkingLotAndDates saveParkLotAndDate(ParkingLotAndDates parkingLotAndDates) {
-        log.info("saving parking lot with date {} to the database", parkingLotAndDates.getParkingLotName());
+        log.info("saving parking lot {} with date to the database", parkingLotAndDates.getParkingLotName());
         return parkingLotAndDatesRepo.save(parkingLotAndDates);
     }
 
@@ -45,7 +45,7 @@ public class ParkingLotAndDatesServiceImlementation implements ParkingLotAndDate
         ParkingLotAndDates parkingLotAndDates = parkingLotAndDatesRepo.getByParkingLotName(parkingLotName);
         BookingDates bookingDates = bookingDateRepo.findByDate(date);
 
-        parkingLotAndDates.getBookingDates().add(bookingDates);
+        //parkingLotAndDates.getBookingDates().add(bookingDates);
     }
 
     @Override
@@ -76,6 +76,11 @@ public class ParkingLotAndDatesServiceImlementation implements ParkingLotAndDate
     }
 
     @Override
+    public List<ParkingLotAndDates> getListParkings(ParkingDetails parkingDetails){
+        return parkingLotAndDatesRepo.getByParkingLotLocationAndParkingLotNameAndDateTwoList(parkingDetails);
+    }
+
+    @Override
     public ParkingLotAndDates getAParking(ParkingDetails parkingDetails){
       /*  return parkingLotAndDatesRepo.getByParkingLotLocationAndParkingLotNameAndDateOne(
                 parkingDetails.getLocation(),
@@ -95,7 +100,7 @@ public class ParkingLotAndDatesServiceImlementation implements ParkingLotAndDate
 
     @Override
     public List<ParkingLotAndDates> getListByLocationAndDate(LocationAndDateForm locationAndDateForm) {
-        return parkingLotAndDatesRepo.getByParkingLotLocationAndParkingLotNameAndDateThree(locationAndDateForm);
+        return  parkingLotAndDatesRepo.getByParkingLotLocationAndParkingLotNameAndDateThree(locationAndDateForm);
     }
 
     @Override

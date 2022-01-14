@@ -1,5 +1,6 @@
 package com.chris.cityparking.controllers;
 
+import com.chris.cityparking.modules.LocationParkAreas;
 import com.chris.cityparking.services.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,10 +18,13 @@ public class BookingController {
     @Autowired
     BookingService bookingService;
 
+    /*
     @GetMapping("/freeSpace/{parkingLotName}")
     public int getFreeSpaces(@PathVariable String parkingLotName){
         return bookingService.getAvailableSpace(parkingLotName);
     }
+
+     */
 
     @GetMapping("/occupiedSpaces/{parkingLotName}")
     public int getOccupiedSpaces(@PathVariable String parkingLotName){
@@ -32,6 +36,12 @@ public class BookingController {
     public ResponseEntity<Set<String>> getLocationData(){
         return new ResponseEntity<>(bookingService.getAreas(), HttpStatus.OK);
     }
+
+    @GetMapping("/locdataList")
+    public ResponseEntity<List<LocationParkAreas>> getLocationListData(){
+        return new ResponseEntity<>(bookingService.getAllParkingsLocationAndAreas(), HttpStatus.OK);
+    }
+
     /*public List<String> getLocationData(){
         return bookingService.getAreas();
     }

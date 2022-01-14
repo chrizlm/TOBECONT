@@ -80,6 +80,7 @@ public class ParkingDetailServiceImplementation implements ParkingDetailService{
         int totalSpaces = parkingLotAndDateService.getTotalSpaces(parkingDetails);
         if(availableSpaces >= 0 || availableSpaces <= totalSpaces ){
             ParkingDetails parkingDetails1 = updateexpiryTime(parkingDetails);
+            //List<ParkingLotAndDates> parkingLotAndDates = parkingLotAndDateService.getListParkings(parkingDetails1);
             ParkingLotAndDates parkingLotAndDates = parkingLotAndDateService.getAParking(parkingDetails1);
             bookingService.updateFreeSpacesWithDates(parkingDetails1);
             parkingDetails1.setParkingLotAndDates(parkingLotAndDates);

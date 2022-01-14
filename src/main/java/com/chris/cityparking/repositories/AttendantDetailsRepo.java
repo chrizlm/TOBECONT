@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface AttendantDetailsRepo extends JpaRepository<AttendantDetails, Long> {
     List<AttendantDetails> getByAttendantID(Long attendantID);
+    AttendantDetails getByEmail(String email);
 }

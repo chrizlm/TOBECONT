@@ -34,11 +34,14 @@ public class ParkingLot {
 
  */
 
-    private int availableSpace;
+    //private int availableSpace;
 
+    /*
     @Temporal(TemporalType.DATE)
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private Date parkingLotDate;
+
+     */
    /*
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<BookingDates> bookingDates = new ArrayList<>();

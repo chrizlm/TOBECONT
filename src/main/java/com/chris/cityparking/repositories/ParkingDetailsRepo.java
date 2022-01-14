@@ -26,5 +26,5 @@ public interface ParkingDetailsRepo extends JpaRepository<ParkingDetails, Long> 
     List<ParkingDetails> getByNumberPlate(String numberPlate);
     void deleteByNumberPlate(String numberPlate);
     List<ParkingDetails> getByParkingLotName(String ParkingLotName);
-
+    List<ParkingDetails> getByParkingDate(Date date);
 }

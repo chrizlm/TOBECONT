@@ -22,4 +22,5 @@ public interface ParkingLotAndDateService {
     int getTotalSpaces(ParkingDetails parkingDetails);
     ParkingLotAndDates getAParkingTwo(ParkingDetails parkingDetails);
     List<ParkingLotAndDates> getListByLocationAndDate(LocationAndDateForm locationAndDateForm);
+    List<ParkingLotAndDates> getListParkings(ParkingDetails parkingDetails);
 }

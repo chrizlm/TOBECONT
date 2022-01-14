@@ -49,4 +49,15 @@ public class ParkingDetails {
     @JsonBackReference
     private ParkingLotAndDates parkingLotAndDates;
 
+    /*
+    @ManyToOne
+    @JoinColumns({
+            @JoinColumn(name="parkinglot_reg"),
+            @JoinColumn(name="date")
+    })
+    @JsonBackReference
+    private ParkingLotAndDates parkingLotAndDates;
+
+     */
+
 }
