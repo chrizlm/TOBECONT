@@ -2,6 +2,7 @@ package com.chris.cityparking.services;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.chris.cityparking.controllers.Forms.EmailPasswordForm;
 import com.chris.cityparking.modules.AppUser;
 import com.chris.cityparking.modules.LogInForm;
 import com.chris.cityparking.modules.Role;
@@ -69,6 +70,14 @@ public class AppUserServiceImplementation implements AppUserService, UserDetails
     public Role saveRole(Role role) {
         log.info("saving new role {} to the database", role.getName());
         return roleRepo.save(role);
+    }
+
+    @Override
+    public void changeUserPassword(EmailPasswordForm emailPasswordForm) {
+        log.info("making changes to user details");
+        AppUser user = appUserRepo.getByEmail(emailPasswordForm.getEmail());
+        user.setPassword(passwordEncoder.encode(emailPasswordForm.getNewpassword()));
+        appUserRepo.save(user);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.chris.cityparking.services;
 
 
+import com.chris.cityparking.modules.LocationParkAreas;
 import com.chris.cityparking.modules.ParkingDetails;
 import com.chris.cityparking.modules.ParkingLot;
 import com.chris.cityparking.modules.ParkingLotAndDates;
@@ -78,6 +79,8 @@ public class BookingServiceImplementation implements BookingService{
     then get the occupied spaces
     return the difference of the two (occupied from total capacity)
      */
+
+    /*
     @Override
     public int getAvailableSpace(String parkingLotName){
         ParkingLot parkingLot = parkingLotRepo.getByParkingLotName(parkingLotName);
@@ -87,6 +90,8 @@ public class BookingServiceImplementation implements BookingService{
         parkingLot.setAvailableSpace(freeSpaces);
         return freeSpaces;
     }
+
+     */
 
     @Override
     public void getAvailableFreeSpacePerDate(String parkingLotName){
@@ -109,6 +114,8 @@ public class BookingServiceImplementation implements BookingService{
         }
     }
 
+
+ /*
     @Override
     public void updateFreeSpace(ParkingLot parkingLot, Date selectedDate){
         int totalCapacity = parkingLot.getTotalParkingSpaces();
@@ -116,48 +123,13 @@ public class BookingServiceImplementation implements BookingService{
         int freeSpaces = ((totalCapacity - 1) - occupiedCapacity);
         ParkingLot PL = parkingLotRepo.getByParkingLotName(parkingLot.getParkingLotName());
         PL.setAvailableSpace(freeSpaces);
-        PL.setParkingLotDate(selectedDate);
+        //PL.setParkingLotDate(selectedDate);
         //parkingLot.setAvailableSpace(freeSpaces);
         parkingLotRepo.save(PL);
 
-        //check date
-
-
-        /*
-        * if statement or case
-        * */
-
-        /*
-        LocalDateTime today =  LocalDateTime.now();
-        LocalDateTime tomorrow = today.plusDays(1);
-
-        if(selectedDate.equals(today)){
-            int totalCapacity = parkingLot.getTotalParkingSpaces();
-            int occupiedCapacity = getOccupiedSpaces(parkingLot.getParkingLotName());
-            int freeSpaces = ((totalCapacity - 1) - occupiedCapacity);
-            ParkingLot PL = parkingLotRepo.getByParkingLotName(parkingLot.getParkingLotName());
-            PL.setAvailableSpace(freeSpaces);
-            PL.setParkingLotDate(selectedDate);
-            //parkingLot.setAvailableSpace(freeSpaces);
-            parkingLotRepo.save(PL);
-        }else if(selectedDate.equals(tomorrow)){
-            int totalCapacity = parkingLot.getTotalParkingSpaces();
-            int occupiedCapacity = getOccupiedSpaces(parkingLot.getParkingLotName());
-            int freeSpaces = ((totalCapacity - 1) - occupiedCapacity);
-            ParkingLot PL = parkingLotRepo.getByParkingLotName(parkingLot.getParkingLotName());
-            PL.setAvailableSpace(freeSpaces);
-            PL.setParkingLotDate(selectedDate);
-            //parkingLot.setAvailableSpace(freeSpaces);
-            parkingLotRepo.save(PL);
-        }
-
-         */
-
-
-
-        //processes
-
     }
+
+  */
 
 
     /*
@@ -189,7 +161,42 @@ public class BookingServiceImplementation implements BookingService{
     }
 
 
+    @Override
+    public List<LocationParkAreas> getAllParkingsLocationAndAreas(){
+        return locationParkAreasRepo.findAll();
+    }
 
 
 
 }
+
+
+/*
+ * if statement or case
+ * */
+
+        /*
+        LocalDateTime today =  LocalDateTime.now();
+        LocalDateTime tomorrow = today.plusDays(1);
+
+        if(selectedDate.equals(today)){
+            int totalCapacity = parkingLot.getTotalParkingSpaces();
+            int occupiedCapacity = getOccupiedSpaces(parkingLot.getParkingLotName());
+            int freeSpaces = ((totalCapacity - 1) - occupiedCapacity);
+            ParkingLot PL = parkingLotRepo.getByParkingLotName(parkingLot.getParkingLotName());
+            PL.setAvailableSpace(freeSpaces);
+            PL.setParkingLotDate(selectedDate);
+            //parkingLot.setAvailableSpace(freeSpaces);
+            parkingLotRepo.save(PL);
+        }else if(selectedDate.equals(tomorrow)){
+            int totalCapacity = parkingLot.getTotalParkingSpaces();
+            int occupiedCapacity = getOccupiedSpaces(parkingLot.getParkingLotName());
+            int freeSpaces = ((totalCapacity - 1) - occupiedCapacity);
+            ParkingLot PL = parkingLotRepo.getByParkingLotName(parkingLot.getParkingLotName());
+            PL.setAvailableSpace(freeSpaces);
+            PL.setParkingLotDate(selectedDate);
+            //parkingLot.setAvailableSpace(freeSpaces);
+            parkingLotRepo.save(PL);
+        }
+
+         */

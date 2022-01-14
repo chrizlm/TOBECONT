@@ -7,6 +7,7 @@ import com.chris.cityparking.modules.ParkingLotAndDates;
 import com.chris.cityparking.repositories.ParkingDetailsRepo;
 import com.chris.cityparking.repositories.ParkingLotAndDatesRepo;
 import com.chris.cityparking.repositories.ParkingLotRepo;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +38,8 @@ public class ParkingDetailServiceImplementation implements ParkingDetailService{
     @Autowired
     ParkingLotAndDatesRepo parkingLotAndDatesRepo;
 
+    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+    //private Date expiryTime;
     /*
     getting details
     saving details
@@ -48,17 +52,39 @@ public class ParkingDetailServiceImplementation implements ParkingDetailService{
         return parkingLotAndDateService.getAvailableSpaces(parkingDetails);
     }
 
-    
+    public ParkingDetails updateexpiryTime(ParkingDetails parkingDetails){
+        ParkingDetails parkingDetails1 = new ParkingDetails();
+        parkingDetails1.setNumberPlate(parkingDetails.getNumberPlate());
+        parkingDetails1.setVehicleType(parkingDetails.getVehicleType());
+        parkingDetails1.setLocation(parkingDetails.getLocation());
+        parkingDetails1.setParkingLotName(parkingDetails.getParkingLotName());
+        parkingDetails1.setParkingDate(parkingDetails.getParkingDate());
+        parkingDetails1.setParkTime(parkingDetails.getParkTime());
+        parkingDetails1.setParkDuration(parkingDetails.getParkDuration());
+
+        //Date expiryTime = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(parkingDetails.getParkTime());
+        calendar.add(Calendar.HOUR, parkingDetails.getParkDuration());
+        //expiryTime = calendar.getTime();
+
+        parkingDetails1.setExpiryParkTime(calendar.getTime());
+
+        return parkingDetails1;
+
+    }
 
     @Override
     public String saveParkingDetail(ParkingDetails parkingDetails){
         int availableSpaces = parkingLotAndDateService.getAvailableSpaces(parkingDetails);
         int totalSpaces = parkingLotAndDateService.getTotalSpaces(parkingDetails);
         if(availableSpaces >= 0 || availableSpaces <= totalSpaces ){
-            ParkingLotAndDates parkingLotAndDates = parkingLotAndDateService.getAParking(parkingDetails);
-            bookingService.updateFreeSpacesWithDates(parkingDetails);
-            parkingDetails.setParkingLotAndDates(parkingLotAndDates);
-            parkingDetailsRepo.save(parkingDetails);
+            ParkingDetails parkingDetails1 = updateexpiryTime(parkingDetails);
+            //List<ParkingLotAndDates> parkingLotAndDates = parkingLotAndDateService.getListParkings(parkingDetails1);
+            ParkingLotAndDates parkingLotAndDates = parkingLotAndDateService.getAParking(parkingDetails1);
+            bookingService.updateFreeSpacesWithDates(parkingDetails1);
+            parkingDetails1.setParkingLotAndDates(parkingLotAndDates);
+            parkingDetailsRepo.save(parkingDetails1);
             return "Successful booked";
         }else {
             return "failed booking";

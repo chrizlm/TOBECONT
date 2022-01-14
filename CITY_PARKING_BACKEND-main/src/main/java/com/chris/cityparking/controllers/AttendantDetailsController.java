@@ -1,6 +1,8 @@
 package com.chris.cityparking.controllers;
 
 
+import com.chris.cityparking.controllers.Forms.EmailPasswordForm;
+import com.chris.cityparking.modules.AdminDetails;
 import com.chris.cityparking.modules.AttendantDetails;
 import com.chris.cityparking.services.AttendantDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +31,20 @@ public class AttendantDetailsController {
         return new ResponseEntity<>(attendantDetailService.getAttendant(attendantID), HttpStatus.OK);
     }
 
+    @GetMapping("/get/{email}")
+    public ResponseEntity<AttendantDetails> getAttendantInfo(@PathVariable String email){
+        return new ResponseEntity<>(attendantDetailService.getAttendantDetails(email), HttpStatus.OK);
+    }
+
     @GetMapping("/getall")
     public ResponseEntity<List<AttendantDetails>> getAllAttendants(){
         return new ResponseEntity<>(attendantDetailService.getAllAttendants(), HttpStatus.OK);
+    }
+
+    @PutMapping("/updatePassword")
+    public ResponseEntity<?> updateAttendantPassword(@RequestBody EmailPasswordForm emailPasswordForm){
+        attendantDetailService.updateAttendantDetailPassword(emailPasswordForm);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/update")
@@ -45,4 +58,6 @@ public class AttendantDetailsController {
         attendantDetailService.deleteAttendant(attendantID);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+
 }

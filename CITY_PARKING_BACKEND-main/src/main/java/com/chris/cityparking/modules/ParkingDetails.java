@@ -33,6 +33,9 @@ public class ParkingDetails {
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm")
     private Date parkTime;
     private int parkDuration;
+    @Temporal(TemporalType.TIME)
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm")
+    private Date expiryParkTime;
 
     /*
     @ManyToOne
@@ -45,5 +48,16 @@ public class ParkingDetails {
     @JoinColumn(name="parkinglot_id")
     @JsonBackReference
     private ParkingLotAndDates parkingLotAndDates;
+
+    /*
+    @ManyToOne
+    @JoinColumns({
+            @JoinColumn(name="parkinglot_reg"),
+            @JoinColumn(name="date")
+    })
+    @JsonBackReference
+    private ParkingLotAndDates parkingLotAndDates;
+
+     */
 
 }

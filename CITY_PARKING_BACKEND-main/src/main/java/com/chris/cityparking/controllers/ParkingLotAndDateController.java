@@ -1,17 +1,21 @@
 package com.chris.cityparking.controllers;
 
 import com.chris.cityparking.modules.BookingDates;
+import com.chris.cityparking.modules.LocationAndDateForm;
 import com.chris.cityparking.modules.ParkingDetails;
 import com.chris.cityparking.modules.ParkingLotAndDates;
 import com.chris.cityparking.services.ParkingLotAndDateService;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/apiv1/parkanddate")
 public class ParkingLotAndDateController {
+
     @Autowired
     ParkingLotAndDateService parkingLotAndDateService;
 
@@ -46,7 +51,8 @@ public class ParkingLotAndDateController {
     }
 
     @GetMapping("/get/{date}")
-    public ResponseEntity<List<ParkingLotAndDates>> getParkingLotByDates(@PathVariable Date date){
+    public ResponseEntity<List<ParkingLotAndDates>> getParkingLotByDates(@PathVariable  @DateTimeFormat(pattern = "yyyy-MM-dd") Date date){
+
         return new ResponseEntity<>(parkingLotAndDateService.getListByDates(date), HttpStatus.OK);
     }
     @GetMapping("/")
@@ -67,6 +73,11 @@ public class ParkingLotAndDateController {
     @GetMapping("/all")
     public ResponseEntity<List<ParkingLotAndDates>> getAllParkingAndDates(){
         return new ResponseEntity<>(parkingLotAndDateService.getAllParkingLotAndDates(), HttpStatus.OK);
+    }
+
+    @PostMapping("/get/bylocanddate")
+    public ResponseEntity<List<ParkingLotAndDates>> getByLocAndDate(@RequestBody LocationAndDateForm locationAndDateForm){
+        return new ResponseEntity<>(parkingLotAndDateService.getListByLocationAndDate(locationAndDateForm), HttpStatus.OK);
     }
 }
 

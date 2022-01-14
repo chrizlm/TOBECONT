@@ -1,5 +1,7 @@
 package com.chris.cityparking.controllers;
 
+import com.chris.cityparking.controllers.Forms.EmailPasswordForm;
+import com.chris.cityparking.modules.AttendantDetails;
 import com.chris.cityparking.modules.MotoristDetails;
 import com.chris.cityparking.services.MotoristDetailService;
 import com.chris.cityparking.services.MotoristDetailServiceImplementation;
@@ -29,6 +31,11 @@ public class MotoristDetailsController {
         return new ResponseEntity<>(motoristDetailService.getMotorist(motoristID), HttpStatus.OK);
     }
 
+    @GetMapping("/get/{email}")
+    public ResponseEntity<MotoristDetails> getMotoristInfo(@PathVariable String email){
+        return new ResponseEntity<>(motoristDetailService.getMotoristDetails(email), HttpStatus.OK);
+    }
+
     @GetMapping("/getall")
     public ResponseEntity<List<MotoristDetails>> getAllMotorists(){
         return new ResponseEntity<>(motoristDetailService.getAllMotorists(), HttpStatus.OK);
@@ -38,6 +45,12 @@ public class MotoristDetailsController {
     public ResponseEntity<?> updateMotorist(@RequestBody MotoristDetails motoristDetails){
         motoristDetailService.updateMotorist(motoristDetails);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("/updatePassword")
+    public ResponseEntity<?> updateMotoristPassword(@RequestBody EmailPasswordForm emailPasswordForm){
+        motoristDetailService.updateMotoristDetailPassword(emailPasswordForm);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{motoristID}")

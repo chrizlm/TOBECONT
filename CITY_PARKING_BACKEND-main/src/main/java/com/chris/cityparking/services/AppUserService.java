@@ -1,5 +1,6 @@
 package com.chris.cityparking.services;
 
+import com.chris.cityparking.controllers.Forms.EmailPasswordForm;
 import com.chris.cityparking.modules.AppUser;
 import com.chris.cityparking.modules.LogInForm;
 import com.chris.cityparking.modules.Role;
@@ -14,5 +15,6 @@ public interface AppUserService {
     void addRoleToUser(String username, String roleName);
     AppUser getAppUser(String userName);
     List<AppUser> getAppUsers();
+    void changeUserPassword(EmailPasswordForm emailPasswordForm);
 
 }

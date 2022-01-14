@@ -1,5 +1,6 @@
 package com.chris.cityparking.repositories;
 
+import com.chris.cityparking.modules.LocationAndDateForm;
 import com.chris.cityparking.modules.ParkingDetails;
 import com.chris.cityparking.modules.ParkingLotAndDates;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -26,6 +27,15 @@ public interface ParkingLotAndDatesRepo extends JpaRepository<ParkingLotAndDates
     //plad.parkingLotLocation =:#{#parkingDetails.location} AND plad.parkingLotName =:#{#parkingDetails.parkingLotName}
     @Query("SELECT plad FROM ParkingLotAndDates plad WHERE plad.parkingLotLocation =:#{#parkingDetails.location} AND plad.parkingLotName =:#{#parkingDetails.parkingLotName} AND plad.date =:#{#parkingDetails.parkingDate}")
     ParkingLotAndDates getByParkingLotLocationAndParkingLotNameAndDateTwo(@Param("parkingDetails")ParkingDetails parkingDetails);
+
+
+    @Query("SELECT plad FROM ParkingLotAndDates plad WHERE plad.parkingLotLocation =:#{#parkingDetails.location} AND plad.parkingLotName =:#{#parkingDetails.parkingLotName} AND plad.date =:#{#parkingDetails.parkingDate}")
+    List<ParkingLotAndDates> getByParkingLotLocationAndParkingLotNameAndDateTwoList(@Param("parkingDetails")ParkingDetails parkingDetails);
+
+
+
+    @Query("SELECT plad FROM ParkingLotAndDates plad WHERE plad.parkingLotLocation =:#{#locationAndDateForm.location} AND plad.parkingLotName =:#{#locationAndDateForm.parkingLotName} AND plad.date =:#{#locationAndDateForm.parkingDate}")
+    List<ParkingLotAndDates> getByParkingLotLocationAndParkingLotNameAndDateThree(@Param("locationAndDateForm")LocationAndDateForm locationAndDateForm);
 
     ParkingLotAndDates getByParkingLotName(String parkingLotName);
     List<ParkingLotAndDates> getByDate(Date date);

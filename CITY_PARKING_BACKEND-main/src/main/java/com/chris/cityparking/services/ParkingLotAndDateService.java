@@ -1,6 +1,7 @@
 package com.chris.cityparking.services;
 
 import com.chris.cityparking.modules.BookingDates;
+import com.chris.cityparking.modules.LocationAndDateForm;
 import com.chris.cityparking.modules.ParkingDetails;
 import com.chris.cityparking.modules.ParkingLotAndDates;
 
@@ -20,4 +21,6 @@ public interface ParkingLotAndDateService {
     List<ParkingLotAndDates> getParkings(ParkingDetails parkingDetails);
     int getTotalSpaces(ParkingDetails parkingDetails);
     ParkingLotAndDates getAParkingTwo(ParkingDetails parkingDetails);
+    List<ParkingLotAndDates> getListByLocationAndDate(LocationAndDateForm locationAndDateForm);
+    List<ParkingLotAndDates> getListParkings(ParkingDetails parkingDetails);
 }

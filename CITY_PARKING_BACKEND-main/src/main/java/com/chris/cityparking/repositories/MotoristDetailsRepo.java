@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface MotoristDetailsRepo extends JpaRepository<MotoristDetails, Long> {
     List<MotoristDetails> getByMotoristID(Long motoristID);
+    MotoristDetails getByEmail(String email);
 }

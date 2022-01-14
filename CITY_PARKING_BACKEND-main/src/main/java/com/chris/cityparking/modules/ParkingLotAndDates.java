@@ -20,10 +20,12 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Entity
+//@IdClass(PKID.class)
 public class ParkingLotAndDates {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
+
 
     private String parkingLotLocation;
 
@@ -31,15 +33,15 @@ public class ParkingLotAndDates {
     @Size(max = 40)
     private String parkingLotName;
 
-    @NaturalId
-    @NotBlank
-    @Size(max = 40)
-    private String parkingRegNo;
+    //@NaturalId
+    //@NotBlank
+    //@Size(max = 40)
+    private String regNo;
 
 
     private Integer totalCapacity;
 
-    private Integer availableSpace = 0;
+    private Integer availableSpace = 5;
 
 
     //@NaturalId
@@ -48,12 +50,17 @@ public class ParkingLotAndDates {
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private Date date;
 
-
+/*
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<BookingDates> bookingDates = new ArrayList<>();
+
+ */
+
 
     @OneToMany(mappedBy = "parkingLotAndDates", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<ParkingDetails> parkingDetails;
+
+
 
 }
