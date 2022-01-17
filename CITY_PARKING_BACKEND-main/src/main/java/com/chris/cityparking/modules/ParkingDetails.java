@@ -21,6 +21,7 @@ public class ParkingDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long parkingDetailID;
+    //private String motoristEmail;
     private String numberPlate;
     private String vehicleType;
     private String location;

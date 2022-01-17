@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -45,17 +46,22 @@ public class AppUserController {
 
 
 
+
     @PostMapping("/login")
     public ResponseEntity<String> authenticateUser(@Valid @RequestBody LogInForm logInForm) {
-        return ResponseEntity.ok().body(appUserService.userLogin(logInForm));
+        //return ResponseEntity.ok().body(appUserService.userLogin(logInForm));
+        return new ResponseEntity<>(appUserService.userLogin(logInForm), HttpStatus.OK);
     }
 
 
+
+    /*
 
     @GetMapping("/")
     public ResponseEntity<List<AppUser>> getAppUsers(){
         return ResponseEntity.ok().body(appUserService.getAppUsers());
     }
+
 
     @PostMapping("/save")
     public ResponseEntity<AppUser> saveAppUser(@RequestBody AppUser appUser){
@@ -63,17 +69,23 @@ public class AppUserController {
         return ResponseEntity.created(uri).body(appUserService.saveAppUser(appUser));
     }
 
+
+
     @PostMapping("/role/save")
     public ResponseEntity<Role> saveRole(@RequestBody Role role){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/apiv1/appUser/role/save").toUriString());
         return ResponseEntity.created(uri).body(appUserService.saveRole(role));
     }
 
+
+
     @PostMapping("/role/addtouser")
     public ResponseEntity<?> addRoleToUser(@RequestBody RoleToUserForm form){
         appUserService.addRoleToUser(form.getUserName(), form.getRoleName());
         return ResponseEntity.ok().build();
     }
+
+ */
 
     @GetMapping("/token/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {

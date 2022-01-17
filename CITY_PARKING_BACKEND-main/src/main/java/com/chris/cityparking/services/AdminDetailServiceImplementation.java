@@ -27,7 +27,7 @@ public class AdminDetailServiceImplementation implements AdminDetailService{
 
     @Override
     public void createAdminDetail(AdminDetails adminDetails) {
-        //adminDetails.setPassword(passwordEncoder.encode(adminDetails.getPassword()));
+        adminDetails.setPassword(passwordEncoder.encode(adminDetails.getPassword()));
         adminDetailsRepo.save(adminDetails);
         appUtilsAdmin.dealWithAppUser(adminDetails);
     }

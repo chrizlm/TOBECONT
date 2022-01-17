@@ -23,12 +23,12 @@ public class ParkingDetailsController {
         return new ResponseEntity<>(parkingDetailService.getAvailableSpaceForBooking(parkingDetails), HttpStatus.OK);
     }
 
-    @PostMapping("/save")
-    public ResponseEntity<String> createParkingDetail(@RequestBody ParkingDetails parkingDetails){
+    @PostMapping("/save/{email}")
+    public ResponseEntity<String> createParkingDetail(@RequestBody ParkingDetails parkingDetails, @PathVariable String email){
         //parkingDetailService.createParkingDetail(parkingDetails);
         //return new ResponseEntity<>(HttpStatus.CREATED);
 
-        return new ResponseEntity<>(parkingDetailService.saveParkingDetail(parkingDetails), HttpStatus.CREATED);
+        return new ResponseEntity<>(parkingDetailService.saveParkingDetail(parkingDetails, email), HttpStatus.CREATED);
     }
 
     @GetMapping("/get/{numberPlate}")
@@ -49,12 +49,14 @@ public class ParkingDetailsController {
     }
 
      */
-
+/*
     @DeleteMapping("/{numberPlate}")
     public ResponseEntity<?> deleteParkingDetail(@PathVariable String numberPlate){
         parkingDetailService.deleteParkingDetails(numberPlate);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+ */
 
     @DeleteMapping("/all")
     public ResponseEntity<?> deleteAllParkingDetails(){

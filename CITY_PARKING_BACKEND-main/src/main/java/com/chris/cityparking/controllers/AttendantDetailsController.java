@@ -53,7 +53,7 @@ public class AttendantDetailsController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping("/{motoristID}")
+    @DeleteMapping("/{attendantID}")
     public ResponseEntity<?> deleteAttendant(@PathVariable Long attendantID){
         attendantDetailService.deleteAttendant(attendantID);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

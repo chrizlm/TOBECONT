@@ -12,6 +12,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.*;
 
 @Configuration
@@ -34,10 +36,15 @@ public class AppUtilsParkingDetails {
     @Scheduled(cron = "0 0 * * * *")
     public void removeRecord(){
 
+
         List<ParkingDetails> recordList = parkingDetailsRepo.getByParkingDate(todaysDate);
 
         for(ParkingDetails parkingDetails : recordList){
-            if(parkingDetails.getExpiryParkTime().compareTo(todaysTime) > 0){
+
+            LocalTime localExpireTime = LocalTime.ofInstant(parkingDetails.getExpiryParkTime().toInstant(), ZoneId.of("UTC"));
+            LocalTime todaysLocalTime = LocalTime.ofInstant(todaysTime.toInstant(), ZoneId.of("UTC"));
+
+            if(todaysLocalTime.isAfter(localExpireTime)){
                 parkingDetailsRepo.delete(parkingDetails);
             }
         }
