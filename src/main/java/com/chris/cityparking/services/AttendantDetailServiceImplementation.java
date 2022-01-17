@@ -29,6 +29,8 @@ public class AttendantDetailServiceImplementation implements AttendantDetailServ
     AppUtilsAttendant appUtilsAttendant;
     @Autowired
     AppUserService appUserService;
+    @Autowired
+    EmailServices emailServices;
 
     /*
     getting details
@@ -40,8 +42,10 @@ public class AttendantDetailServiceImplementation implements AttendantDetailServ
 
     @Override
     public void createAttendantDetail(AttendantDetails attendantDetails) {
+        attendantDetails.setPassword(passwordEncoder.encode(attendantDetails.getPassword()));
         attendantDetailsRepo.save(attendantDetails);
         appUtilsAttendant.dealWithAppUser(attendantDetails);
+        emailServices.sendRegistrationMailAttendant(attendantDetails);
     }
 
     @Override

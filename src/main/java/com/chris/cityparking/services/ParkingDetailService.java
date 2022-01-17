@@ -12,5 +12,5 @@ public interface ParkingDetailService {
     //void updateParkingDetail(ParkingDetails parkingDetails);
     void deleteParkingDetails(String numberPlate);
     void deleteAllParkingDetails();
-    String saveParkingDetail(ParkingDetails parkingDetails);
+    String saveParkingDetail(ParkingDetails parkingDetails, String email);
 }

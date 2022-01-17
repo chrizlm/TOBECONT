@@ -32,6 +32,9 @@ public class MotoristDetailServiceImplementation implements MotoristDetailServic
     @Autowired
     AppUserService appUserService;
 
+    @Autowired
+    EmailServices emailServices;
+
 
     /*
     getting details
@@ -42,8 +45,10 @@ public class MotoristDetailServiceImplementation implements MotoristDetailServic
 
     @Override
     public void createMotoristDetail(MotoristDetails motoristDetails){
+        motoristDetails.setPassword(passwordEncoder.encode(motoristDetails.getPassword()));
         motoristDetailsRepo.save(motoristDetails);
         appUtilsMotorist.dealWithAppUser(motoristDetails);
+        emailServices.sendRegistrationMailMotorist(motoristDetails.getEmail());
     }
     @Override
     public List<MotoristDetails> getMotorist(Long motoristID){
@@ -72,7 +77,8 @@ public class MotoristDetailServiceImplementation implements MotoristDetailServic
     @Override
     public void updateMotoristDetailPassword(EmailPasswordForm emailPasswordForm){
         MotoristDetails newMotoristInfo = getMotoristDetails(emailPasswordForm.getEmail());
-        newMotoristInfo.setPassword(passwordEncoder.encode(emailPasswordForm.getNewpassword()));
+        //newMotoristInfo.setPassword(passwordEncoder.encode(emailPasswordForm.getNewpassword()));
+        newMotoristInfo.setPassword(emailPasswordForm.getNewpassword());
         motoristDetailsRepo.save(newMotoristInfo);
         appUserService.changeUserPassword(emailPasswordForm);
     }

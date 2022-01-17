@@ -36,6 +36,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
     }
 
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -43,9 +45,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //customAuthenticationFilter.setFilterProcessesUrl("/apiv1/appUser/login");
         http.cors();
         http.csrf().disable();
+        //http.cors().and().csrf().disable();
         http.sessionManagement().sessionCreationPolicy(STATELESS);
-        http.authorizeRequests().antMatchers("/apiv1/**").permitAll();
-
+        http.authorizeRequests().antMatchers("/apiv1/appUser/login").permitAll();
+        http.authorizeRequests().antMatchers(GET, "/apiv1/attendant/getall","/apiv1/motorist/getall").hasAuthority("ROLE_ADMIN");
+        http.authorizeRequests().antMatchers(POST,  "/apiv1/attendant/save","/apiv1/parkingLot/save").hasAuthority("ROLE_ADMIN");
+        http.authorizeRequests().antMatchers(PUT, "/apiv1/parkingLot/update","/apiv1/attendant/update").hasAuthority("ROLE_ADMIN");
+        http.authorizeRequests().antMatchers(DELETE, "/apiv1/attendant/{attendantID}","/apiv1/parkingdetails/all","/apiv1/parkingLot/all","/apiv1/parkingLot/{parkingRegNo}").hasAuthority("ROLE_ADMIN");
+        http.authorizeRequests().antMatchers(GET, "/apiv1/attendant/getDetails/{attendantID}","/apiv1/attendant/get/{email}","/apiv1/parkingdetails/all").hasAnyAuthority("ROLE_ATTENDANT","ROLE_ADMIN");
+        http.authorizeRequests().antMatchers(PUT, "/apiv1/attendant/updatePassword").hasAnyAuthority("ROLE_ATTENDANT","ROLE_ADMIN");
+        http.authorizeRequests().antMatchers(GET, "/apiv1/motorist/getDetails/{motoristID}","/apiv1/motorist/get/{email}","/apiv1/parkingdetails/get/{numberPlate}").hasAnyAuthority("ROLE_MOTORIST","ROLE_ADMIN");
+        http.authorizeRequests().antMatchers(POST, "/apiv1/motorist/save","/apiv1/parkingdetails/save/{email}").hasAnyAuthority("ROLE_MOTORIST","ROLE_ADMIN");
+        http.authorizeRequests().antMatchers(PUT, "/apiv1/motorist/update","/apiv1/motorist/updatePassword").hasAnyAuthority("ROLE_MOTORIST","ROLE_ADMIN");
+        http.authorizeRequests().antMatchers(DELETE, "/apiv1/motorist/{motoristID}").hasAnyAuthority("ROLE_MOTORIST","ROLE_ADMIN");
+        http.authorizeRequests().antMatchers(DELETE, "/apiv1/parkingdetails/get/{numberPlate}").hasAnyAuthority("ROLE_MOTORIST","ROLE_MOTORIST","ROLE_ADMIN");
 
         /*
 

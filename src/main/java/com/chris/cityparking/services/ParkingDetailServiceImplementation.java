@@ -37,6 +37,8 @@ public class ParkingDetailServiceImplementation implements ParkingDetailService{
     ParkingLotAndDateService parkingLotAndDateService;
     @Autowired
     ParkingLotAndDatesRepo parkingLotAndDatesRepo;
+    @Autowired
+    EmailServices emailServices;
 
     //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
     //private Date expiryTime;
@@ -75,7 +77,7 @@ public class ParkingDetailServiceImplementation implements ParkingDetailService{
     }
 
     @Override
-    public String saveParkingDetail(ParkingDetails parkingDetails){
+    public String saveParkingDetail(ParkingDetails parkingDetails, String email){
         int availableSpaces = parkingLotAndDateService.getAvailableSpaces(parkingDetails);
         int totalSpaces = parkingLotAndDateService.getTotalSpaces(parkingDetails);
         if(availableSpaces >= 0 || availableSpaces <= totalSpaces ){
@@ -85,6 +87,7 @@ public class ParkingDetailServiceImplementation implements ParkingDetailService{
             bookingService.updateFreeSpacesWithDates(parkingDetails1);
             parkingDetails1.setParkingLotAndDates(parkingLotAndDates);
             parkingDetailsRepo.save(parkingDetails1);
+            emailServices.sendBookingDetailsMailMotorist(parkingDetails1, email);
             return "Successful booked";
         }else {
             return "failed booking";
